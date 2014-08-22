@@ -26,3 +26,7 @@ PHP的脚本执行时间长了就会失去响应，即使我们设置为永不�
 * 服务的启动与停止
 
 ```# /etc/init.d/phpdaemonExample start|stop|status|restart```
+* 添加到开机自启动
+```
+# rc-update add phpdaemonExample default
+```
