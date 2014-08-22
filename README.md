@@ -15,10 +15,14 @@ PHP的脚本执行时间长了就会失去响应，即使我们设置为永不�
 ```
 #### 使用示例
 * 创建一个软链接，这个名称最好取的和你最终要运行的php名称一致
+
 ```# ln -s /etc/init.d/phpdaemon_link /etc/init.d/phpdaemonExample```
 * 正式的时候这个是你需要运行的php程序
+
 ```# echo "<?php sleep(600); " > /var/www/phpdaemonExample.php```
 * 把刚才的的php程序全路径指定到配置文件里面去。 /etc/conf.d/配置文件名字 必须和创建软链接的名字一致，不然配置了无效
+
 ```# echo 'PHP_SCRIPT="/var/www/phpdaemonExample.php"' >> /etc/conf.d/phpdaemonExample```
 * 服务的启动与停止
+
 ```# /etc/init.d/phpdaemonExample start|stop|status|restart```
