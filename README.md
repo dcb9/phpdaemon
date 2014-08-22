@@ -5,8 +5,15 @@ PHP的脚本执行时间长了就会失去响应，即使我们设置为永不�
  
 ### Gentoo安装配置
 #### 安装
-```# emerge phpdaemon```
-#### 示例
+```
+# USE=git emerge layman
+# layman -f
+# layman -a gentoo-zh
+# echo "source /var/lib/layman/make.conf" >> /etc/portage/make.conf
+# emerge phpdaemon
+
+```
+#### 使用示例
 * 创建一个软链接，这个名称最好取的和你最终要运行的php名称一致
 ```# ln -s /etc/init.d/phpdaemon_link /etc/init.d/phpdaemonExample```
 * 正式的时候这个是你需要运行的php程序
