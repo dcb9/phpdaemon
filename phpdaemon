@@ -1,0 +1,35 @@
+#!/bin/bash
+# version $Id$
+# Author: bob <bob@jjwxc.com>
+# Since: 2014-08-18
+
+PHP="/usr/bin/php"
+PROGRAM="${1:-/path/to/php}"
+PHP_PID_FILE="/var/run/${PROGRAM##*/}.sid"
+
+trap "exitPhp" 2 3 9 15
+
+exitPhp(){
+  kill "`cat $PHP_PID_FILE`"
+  rm $PHP_PID_FILE
+  exit 0
+}
+
+_run_php(){
+  #start dameon
+  $PHP $PROGRAM &
+  chpid="$!";
+  echo "$chpid" > $PHP_PID_FILE
+  echo "date: `date` child php pid is $chpid"
+}
+
+_run_php
+
+while [ 1 ]
+do
+  wait $chpid
+  echo -e "date: `date` child php pid=$chpid is gone, $?" >&2
+
+  sleep 5
+  _run_php
+done

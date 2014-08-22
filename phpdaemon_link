@@ -1,0 +1,36 @@
+#!/sbin/runscript
+# Copyright 1999-2014 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+NAME="${RC_SVCNAME}"
+PHP_SCRIPT=${PHP_SCRIPT:-/path/to/php}
+
+PID=${PID:-/var/run/$NAME.pid}
+LOG="/var/log/$NAME.log"
+ERROR_LOG="/var/log/$NAME_error.log"
+
+depend() {
+	after *
+}
+
+start() {
+	ebegin "start $NAME"
+	
+	start-stop-daemon --start --exec /usr/bin/phpdaemon \
+	--pidfile ${PID} \
+	--make-pidfile \
+	--background \
+	--name ${NAME} \
+	--stdout ${LOG} \
+	--stderr ${ERROR_LOG} \
+	-- "${PHP_SCRIPT}"
+	eend $?
+}
+
+stop() {
+	ebegin "stop $NAME"
+
+	start-stop-daemon --stop --pidfile ${PID}
+	eend $?
+}
