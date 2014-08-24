@@ -7,8 +7,8 @@ NAME="${RC_SVCNAME}"
 PHP_SCRIPT=${PHP_SCRIPT:-/path/to/php}
 
 PID=${PID:-/var/run/$NAME.pid}
-LOG="/var/log/$NAME.log"
-ERROR_LOG="/var/log/$NAME_error.log"
+LOG=${LOG:-/var/log/$NAME.log}
+ERROR_LOG=${ERROR_LOG:-/var/log/${NAME}_error.log}
 
 depend() {
 	after *
@@ -22,9 +22,7 @@ start() {
 	--make-pidfile \
 	--background \
 	--name ${NAME} \
-	--stdout ${LOG} \
-	--stderr ${ERROR_LOG} \
-	-- "${PHP_SCRIPT}"
+	-- "${PHP_SCRIPT}" "${LOG}" "${ERROR_LOG}"
 	eend $?
 }
 

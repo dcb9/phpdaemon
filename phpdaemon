@@ -5,6 +5,8 @@
 
 PHP="/usr/bin/php"
 PROGRAM="${1:-/path/to/php}"
+LOG="${2:-/path/to/log}"
+ERROR_LOG="${3:-/path/to/error_log}"
 PHP_PID_FILE="/var/run/${PROGRAM##*/}.sid"
 
 trap "exitPhp" 2 3 9 15
@@ -17,10 +19,10 @@ exitPhp(){
 
 _run_php(){
   #start dameon
-  $PHP $PROGRAM &
+  $PHP $PROGRAM >> $LOG 2>> $ERROR_LOG &
   chpid="$!";
   echo "$chpid" > $PHP_PID_FILE
-  echo "date: `date` child php pid is $chpid"
+  echo "date: `date` child php pid is $chpid" >> $LOG
 }
 
 _run_php
@@ -28,7 +30,7 @@ _run_php
 while [ 1 ]
 do
   wait $chpid
-  echo -e "date: `date` child php pid=$chpid is gone, $?" >&2
+  echo -e "date: `date` child php pid=$chpid is gone, $?" >> $ERROR_LOG
 
   sleep 5
   _run_php

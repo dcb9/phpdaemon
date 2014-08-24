@@ -1,0 +1,4 @@
+# PHP_SCRIPT=/path/to/phpfile
+# PID=/var/run/$NAME.pid
+# LOG=/var/log/$NAME.log
+# ERROR_LOG=/var/log/${NAME}_error.log

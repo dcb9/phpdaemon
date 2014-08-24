@@ -1,0 +1,74 @@
+#!/bin/bash
+#
+# phpdaemon
+#
+
+NAME="${0##*/}"
+
+if [ "$NAME" = "phpdaemon" ]; then
+  echo "phpdaemon is a link file. please see https://github.com/bobchengbin/phpdaemon"
+  exit 3
+fi
+
+
+CONFIG="/etc/conf.d/$NAME"
+if [ -f $CONFIG ]; then
+	source $CONFIG
+	echo "load config file: $CONFIG"
+else
+	echo "please create config file $CONFIG"
+fi
+
+PHP_SCRIPT=${PHP_SCRIPT:-/path/to/php}
+PID=${PID:-/var/run/$NAME.pid}
+LOG=${LOG:-/var/log/$NAME.log}
+ERROR_LOG=${ERROR_LOG:-/var/log/${NAME}_error.log}
+
+start(){
+	echo "starting ${NAME}..."
+	if [ -z $PID ]; then
+		echo "${NAME} has started."
+		exit
+	fi
+	/usr/local/bin/start-stop-daemon --start --exec /usr/bin/phpdaemon \
+	--pidfile ${PID} \
+	--make-pidfile \
+	--background \
+	--name ${NAME} \
+	-- "${PHP_SCRIPT}" "$LOG" "$ERROR_LOG"
+}
+
+stop(){
+	echo "stoping ${NAME}..."
+	/usr/local/bin/start-stop-daemon --stop --pidfile ${PID}
+	rm -rf ${PID}
+}
+
+status(){
+	ps -p "`cat $PID`" 2>/dev/null >/dev/null 
+	if [ $? -ne 0 ]; then
+		echo "$NAME crashed" >&2
+		exit 3
+	fi
+	echo "$NAME is running"
+	exit 0
+}
+
+case "$1" in
+  start)
+    start
+;;
+  stop)
+  stop
+;;
+  restart)
+    stop
+    start
+;;
+  status)
+    status
+;;
+  *)
+    echo $"Usage: $0 {start|stop|restart}"
+    exit 2
+esac
