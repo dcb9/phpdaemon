@@ -29,6 +29,7 @@ PHP的脚本执行时间长了就会失去响应，即使我们设置为永不�
 # cp phpdaemon/phpdaemon /usr/bin/phpdaemon
 # chmod 755 /usr/bin/phpdaemon   (注意，CentOS这个系统非常乱大家安装php的位置都可能不一样，如果php不是在/usr/bin/php那么请修改 /usr/bin/phpdaemon的配置文件）
 # cp phpdaemon/phpdaemon_centos /etc/init.d/phpdaemon_link
+# chmod 755 /etc/init.d/phpdaemon_link
 # mkdir /etc/conf.d/  （这个目录是为了存放配置文件用的）
 ```
 

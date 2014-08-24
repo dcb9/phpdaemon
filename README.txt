@@ -22,6 +22,7 @@ Second step install phpdaemon
 # cp phpdaemon/phpdaemon /usr/bin/phpdaemon
 # chmod 755 /usr/bin/phpdaemon (change /usr/bin/phpdaemon if php command isn't /usr/bin/php )
 # cp phpdaemon/phpdaemon_centos /etc/init.d/phpdaemon_link
+# chmod 755 /etc/init.d/phpdaemon_link
 # mkdir /etc/conf.d/
 usage
 # ln -s /etc/init.d/phpdaemon_link /etc/init.d/phpdaemonExample 
