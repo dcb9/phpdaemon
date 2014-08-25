@@ -2,6 +2,8 @@
 #
 # phpdaemon
 #
+# chkconfig: - 91 19
+# description: phpdaemon
 
 NAME="${0##*/}"
 
