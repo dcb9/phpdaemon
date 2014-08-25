@@ -48,5 +48,5 @@ PHP的脚本执行时间长了就会失去响应，即使我们设置为永不�
 ```# /etc/init.d/phpdaemonExample start|stop|status|restart```
 
 #### 加入系统自启动
-* Gentoo `rc-update add phpdaemonExample default`
-* CentOs `chkconfig --levels 2345 phpdaemonExample on`
+* Gentoo `# rc-update add phpdaemonExample default`
+* CentOS `# echo "/etc/init.d/phpdaemonExample start" >> /etc/rc.d/rc.local`
